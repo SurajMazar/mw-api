@@ -1,9 +1,11 @@
 import prisma from '../../../utils/prisma.helper';
+import {User} from '@prisma/client';
 import {Request} from 'express';
 import jwt from 'jsonwebtoken';
+import {UserService} from '../user/user.service';
 
 const bcrypt = require('bcrypt');
-
+const userService = new UserService();
 
 export class AuthService{
 
@@ -17,7 +19,7 @@ export class AuthService{
         include:{
           role:true
         },
-      })
+      });
   
       if(LoginUser){
         const value =await bcrypt.compare(password, LoginUser.password);
@@ -39,12 +41,18 @@ export class AuthService{
     try{
       const authorization = req.headers.authorization!;
       const token = authorization?.split('Bearer ')[1];
-      const user = await jwt.decode(token);
-      return user;
+      const decoded:any = jwt.decode(token);
+      if(decoded.user.id){
+        let user = await userService.getUserById(decoded.user.id);
+        return user;
+      }
+      throw "User not found";
     }catch{
       throw "User not found";
     }
   }
+
+
 
 
 }

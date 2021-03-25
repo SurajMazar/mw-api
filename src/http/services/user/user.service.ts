@@ -4,14 +4,21 @@ import prisma from '../../../utils/prisma.helper';
 
 export class UserService{
 
-  public async getUserByEmail(email:string){
+  public async getUserById(id:number){
     try{
       const user = await prisma.user.findUnique({
         where:{
-          email:email
+          id:id
         },
         select:{
-          password:false,
+          id:true,
+          name:true,
+          email:true,
+          address:true,
+          contact:true,
+          createdAt:true,
+          userImage:true,
+          updatedAt:true,
           role:true,
         },
       });
