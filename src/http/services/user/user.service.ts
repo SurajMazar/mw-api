@@ -1,7 +1,4 @@
-import {Request} from 'express';
-import jwt from 'jsonwebtoken';
 import prisma from '../../../utils/prisma.helper';
-
 export class UserService{
 
   public async getUserById(id:number){
