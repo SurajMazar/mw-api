@@ -1,8 +1,7 @@
+///<reference path="../../utils/response.helper.ts"/>
 import { NextFunction, Request, Response} from 'express';
 import jwt,{JsonWebTokenError} from 'jsonwebtoken';
 import {JWT_SECRETE} from '../../constants/config';
-import {formatResponse} from '../../utils/response.helper';
-
 
 
 export const getTokenFromBearer = (req:Request)=>{
@@ -28,7 +27,7 @@ async function jwtAuthMiddleware(req:Request,res:Response,next:NextFunction){
     next();
   }catch(e){
     if(e instanceof JsonWebTokenError){
-      res.status(401).json(formatResponse(
+      res.status(401).json(fr.formatResponse(
         {
           message: 'unauthenticated',
         },false

@@ -2,7 +2,7 @@ import prisma from '../../../utils/prisma.helper';
 import {User} from '@prisma/client';
 import {Request} from 'express';
 import jwt from 'jsonwebtoken';
-import {UserService} from '../user/user.service';
+import {UserService} from '../user/user.repository';
 
 const bcrypt = require('bcrypt');
 const userService = new UserService();
@@ -37,7 +37,7 @@ export class AuthService{
   }
 
 
-   public async userProfile(req:Request){
+  public async userProfile(req:Request){
     try{
       const authorization = req.headers.authorization!;
       const token = authorization?.split('Bearer ')[1];

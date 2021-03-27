@@ -1,5 +1,6 @@
 import prisma from '../../../utils/prisma.helper';
-export class UserService{
+import {UserInterface} from './user.interface'
+export class UserService implements UserInterface{
 
   public async getUserById(id:number){
     try{
@@ -21,8 +22,12 @@ export class UserService{
       });
       return user;
     }catch{
-      throw "user not found";
+      throw new Error("User not found");
+      ;
     }
   }
+
+
+  
 
 }
