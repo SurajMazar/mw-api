@@ -1,53 +1,51 @@
 import prisma from '../../../utils/prisma.helper';
-import {User} from '@prisma/client';
-import {Request} from 'express';
+import { User } from '@prisma/client';
+import { Request } from 'express';
 import jwt from 'jsonwebtoken';
-import {UserService} from '../user/user.service';
+import { UserService } from '../user/user.service';
 
 const bcrypt = require('bcrypt');
 const userService = new UserService();
 
-export class AuthService{
+export class AuthService {
 
-  public async login(email:string,password:string){
+  public async login(email: string, password: string) {
 
-    try{
-      const LoginUser = await  prisma.user.findUnique({
-        where:{
-          email:email
+    try {
+      const LoginUser = await prisma.user.findUnique({
+        where: {
+          email: email
         },
-        include:{
-          role:true
+        include: {
+          role: true
         },
       });
-  
-      if(LoginUser){
-        const value =await bcrypt.compare(password, LoginUser.password);
-        if(value){
-          const user:any = LoginUser;
+
+      if (LoginUser) {
+        const value = await bcrypt.compare(password, LoginUser.password);
+        if (value) {
+          const user: any = LoginUser;
           delete user.password;
           return user;
         }
         throw "Invalid Credentials";
       }
-    }catch{
+    } catch {
       throw "Invalid Credentials";
     }
 
   }
 
 
-   public async userProfile(req:Request){
-    try{
-      const authorization = req.headers.authorization!;
-      const token = authorization?.split('Bearer ')[1];
-      const decoded:any = jwt.decode(token);
-      if(decoded.user.id){
-        let user = await userService.getUserById(decoded.user.id);
+  public async getUserProfile(userId: number) {
+    try {
+
+      if (userId) {
+        let user = await userService.getUserById(userId);
         return user;
       }
       throw "User not found";
-    }catch{
+    } catch {
       throw "User not found";
     }
   }

@@ -33,8 +33,9 @@ export class AuthController{
 
 
   public async profile(req:Request,res:Response){
+    
     try{
-      const profile = await authService.userProfile(req);
+      const profile = await authService.getUserProfile(req);
       res.status(200).json(formatResponse({
         profile:profile
       },true));
