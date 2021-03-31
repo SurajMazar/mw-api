@@ -24,7 +24,7 @@ export class AuthController{
     catch(e){
       res.status(422).json(formatResponse(
         {
-          message:e,
+          errors:e,
         },false
       ))
     } 
@@ -40,7 +40,7 @@ export class AuthController{
       },true));
     }catch(e){
       res.status(500).json(formatResponse({
-        message:e
+        errors:e
       },false));
     }
   }// get user profile

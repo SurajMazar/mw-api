@@ -30,7 +30,7 @@ async function jwtAuthMiddleware(req:Request,res:Response,next:NextFunction){
     if(e instanceof JsonWebTokenError){
       res.status(401).json(formatResponse(
         {
-          message: 'unauthenticated',
+          errors: 'unauthenticated',
         },false
       ));
       return;
@@ -38,7 +38,7 @@ async function jwtAuthMiddleware(req:Request,res:Response,next:NextFunction){
 
     res.status(500).json({
       message: "Internal server Error",
-      error: e.message,
+      errors: e.message,
       stack: e.stack
     });
 
