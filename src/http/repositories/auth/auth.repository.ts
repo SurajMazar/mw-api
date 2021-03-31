@@ -28,8 +28,8 @@ export class AuthService{
           delete user.password;
           return user;
         }
-        throw "Invalid Credentials";
       }
+      throw "Invalid Credentials";
     }catch{
       throw "Invalid Credentials";
     }

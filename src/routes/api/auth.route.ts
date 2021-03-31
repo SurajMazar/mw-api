@@ -11,4 +11,5 @@ const router = express.Router();
 router.post('/login',loginRequest(),validate,Auth.login);
 router.get('/profile',jwtAuthMiddleware,Auth.profile);
 
+
 export default router;

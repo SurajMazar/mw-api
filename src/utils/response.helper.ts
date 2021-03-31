@@ -1,8 +1,6 @@
-namespace fr{
-  export const formatResponse = (data:any,success:boolean) =>{
-    return {
-      success:success,
-      data:data
-    }
+export const formatResponse = (data:any,success:boolean) =>{
+  return {
+    success:success,
+    data:data
   }
 }

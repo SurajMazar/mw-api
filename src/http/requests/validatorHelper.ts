@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import {validationResult} from 'express-validator';
+import { formatResponse } from '../../utils/response.helper';
 
 export const validate = (req:Request,res:Response,next:NextFunction)=>{
   const errors = validationResult(req);
@@ -16,7 +17,7 @@ export const validate = (req:Request,res:Response,next:NextFunction)=>{
     })
   })
 
-  return res.status(422).json({
+  return res.status(422).json(formatResponse({
     errors:formattedError
-  })
+  },false))
 }
