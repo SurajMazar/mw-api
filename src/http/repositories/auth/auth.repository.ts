@@ -36,6 +36,37 @@ export class AuthService{
 
   }
 
+  public async loginAdmin(email:string,password:string){
+    try{
+      const LoginUser = await  prisma.user.findUnique({
+        where:{
+          email:email
+        },
+        include:{
+          role:true
+        },
+      });
+  
+      if(LoginUser){
+        const role = LoginUser?.role;
+        if(role?.name.toLowerCase() === 'admin' ){
+          const value =await bcrypt.compare(password, LoginUser.password);
+          if(value){
+            const user:any = LoginUser;
+            delete user.password;
+            return user;
+          }
+        }
+        throw "Invalid Credentials";
+      }
+      throw "Invalid Credentials";
+    }catch{
+      throw "Invalid Credentials";
+    }
+
+  }
+ 
+
 
   public async userProfile(req:Request){
     try{

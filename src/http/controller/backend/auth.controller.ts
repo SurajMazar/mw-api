@@ -11,7 +11,8 @@ export class AuthController{
 
   public async login(req:Request,res:Response){
     try{
-      const user = await authService.login(req.body.email,req.body.password);
+      const {email,password} = req.body;
+      const user = await authService.login(email,password);
       jwt.sign({user},JWT_SECRETE,{ expiresIn: 60 * 60 * 24 * 7 }, (err:any,token:any)=>{
           res.status(200).json(formatResponse(
             {
@@ -44,5 +45,28 @@ export class AuthController{
       },false));
     }
   }// get user profile
+
+
+  public async loginAdmin(req:Request,res:Response){
+    try{
+      const {email,password} = req.body;
+      const user = await authService.loginAdmin(email,password);
+      jwt.sign({user},JWT_SECRETE,{ expiresIn: 60 * 60 * 24 * 7 }, (err:any,token:any)=>{
+          res.status(200).json(formatResponse(
+            {
+              token:token,
+              user:user
+            },true
+          ))
+        })
+      }
+    catch(e){
+      res.status(422).json(formatResponse(
+        {
+          errors:e,
+        },false
+      ))
+    } 
+  } // end login 
 
 }
