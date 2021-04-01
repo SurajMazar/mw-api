@@ -32,3 +32,12 @@ model User{
   createdAt DateTime
   updatedAt DateTime
 }
+
+
+model genre{
+  id Int @id @default(autoincrement())
+  name String
+  slug String @unique
+  createdAt DateTime
+  updatedAt DateTime
+}
