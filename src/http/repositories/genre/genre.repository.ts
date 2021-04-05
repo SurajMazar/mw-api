@@ -10,12 +10,20 @@ class GenreRepository implements GenreInterface{
   public async index(req:Request){
     try{
       const page = Number(req.query.page);
+      const keyword = (req.query.keyword)?.toString() || ''; // keyword for search query
       const genres = await prisma.genre.findMany({
         orderBy:{
           createdAt:'desc',
         },
         skip:page * ItemPerPage - ItemPerPage || 0,
-        take:ItemPerPage
+        take:ItemPerPage,
+        where:{
+          OR: [
+            { name: { contains: keyword } },  // search keyword query
+            { slug: { contains: keyword } }, // search keyword query
+            { description: { contains: keyword } }, // search keyword query
+          ]
+        }
       })
       const total = await prisma.genre.count();
       return paginate('genres',page,total,genres);
@@ -66,6 +74,7 @@ class GenreRepository implements GenreInterface{
   // get genre by id
 
 
+  // update genre
   public async update(req:Request){
     try{
       const id = Number(req.params.id);
@@ -73,7 +82,7 @@ class GenreRepository implements GenreInterface{
       const  CleanSlug = cleanSlug(slug);
       const generatedSlug = await slugGenerator(prisma.genre,CleanSlug) 
 
-      const preGenre =await this.show(id);// previous genre
+      const preGenre =await this.show(id);// un-updated genre
       const genre  = await  prisma.genre.update({
         where:{
           id:id
@@ -91,7 +100,7 @@ class GenreRepository implements GenreInterface{
       throw e;
     }
   }
-
+  // end update genre
 
 
 
