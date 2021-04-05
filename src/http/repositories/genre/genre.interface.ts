@@ -5,4 +5,5 @@ export interface GenreInterface{
   index(req:Request):Promise<any>;
   store(req:Request):Promise<genre>;
   show(id:number):Promise<genre|null>;
+  update(req:Request):Promise<genre>;
 }

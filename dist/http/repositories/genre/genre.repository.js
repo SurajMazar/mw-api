@@ -129,6 +129,46 @@ var GenreRepository = /** @class */ (function () {
             });
         });
     };
+    // get genre by id
+    GenreRepository.prototype.update = function (req) {
+        return __awaiter(this, void 0, void 0, function () {
+            var id, _a, name_2, slug, description, createdAt, CleanSlug, generatedSlug, preGenre, genre, e_3;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 4, , 5]);
+                        id = Number(req.params.id);
+                        _a = req.body, name_2 = _a.name, slug = _a.slug, description = _a.description, createdAt = _a.createdAt;
+                        CleanSlug = common_helpers_1.cleanSlug(slug);
+                        return [4 /*yield*/, common_helpers_1.slugGenerator(prisma_helper_1.default.genre, CleanSlug)];
+                    case 1:
+                        generatedSlug = _b.sent();
+                        return [4 /*yield*/, this.show(id)];
+                    case 2:
+                        preGenre = _b.sent();
+                        return [4 /*yield*/, prisma_helper_1.default.genre.update({
+                                where: {
+                                    id: id
+                                },
+                                data: {
+                                    name: name_2,
+                                    slug: (preGenre === null || preGenre === void 0 ? void 0 : preGenre.slug) === slug ? slug : generatedSlug,
+                                    description: description,
+                                    createdAt: createdAt,
+                                    updatedAt: new Date()
+                                }
+                            })];
+                    case 3:
+                        genre = _b.sent();
+                        return [2 /*return*/, genre];
+                    case 4:
+                        e_3 = _b.sent();
+                        throw e_3;
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return GenreRepository;
 }());
 exports.default = GenreRepository;

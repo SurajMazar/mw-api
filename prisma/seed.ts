@@ -1,5 +1,6 @@
-import roles from './seed-data/roles'
-import users from './seed-data/users'
+import roles from './seed-data/roles';
+import users from './seed-data/users';
+
 import {PrismaClient} from '@prisma/client'
 import { Hash } from 'crypto';
 const bcrypt = require('bcrypt');

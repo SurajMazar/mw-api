@@ -66,6 +66,33 @@ class GenreRepository implements GenreInterface{
   // get genre by id
 
 
+  public async update(req:Request){
+    try{
+      const id = Number(req.params.id);
+      const {name,slug,description,createdAt} = req.body;
+      const  CleanSlug = cleanSlug(slug);
+      const generatedSlug = await slugGenerator(prisma.genre,CleanSlug) 
+
+      const preGenre =await this.show(id);// previous genre
+      const genre  = await  prisma.genre.update({
+        where:{
+          id:id
+        },
+        data:{
+          name:name,
+          slug:preGenre?.slug === slug? slug:generatedSlug,
+          description:description,
+          createdAt:createdAt,
+          updatedAt:new Date()
+        }
+      });
+      return genre;
+    }catch(e){
+      throw e;
+    }
+  }
+
+
 
 
 }

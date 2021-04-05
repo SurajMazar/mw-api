@@ -13,4 +13,5 @@ var router = express_1.default.Router();
 router.use(api_middleware_1.default(['admin']));
 router.get('/', Genre.index);
 router.post('/store', genre_request_1.genreRequest(), validatorHelper_1.validate, Genre.store);
+router.put('/update/:id', genre_request_1.genreRequest(), validatorHelper_1.validate, Genre.update);
 exports.default = router;

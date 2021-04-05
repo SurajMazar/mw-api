@@ -89,6 +89,28 @@ var GenreController = /** @class */ (function () {
             });
         });
     };
+    // store genre
+    // update genre
+    GenreController.prototype.update = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, e_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, Genre.update(req)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, res.status(200).json(response_helper_1.formatResponse(response, true))];
+                    case 2:
+                        e_3 = _a.sent();
+                        res.status(500).json(response_helper_1.formatResponse(e_3, false));
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return GenreController;
 }());
 exports.default = GenreController;

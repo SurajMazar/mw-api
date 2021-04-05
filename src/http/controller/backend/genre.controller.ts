@@ -20,6 +20,8 @@ import GenreRepository from '../../repositories/genre/genre.repository';
   }
   //genre
 
+
+
   // end store genre
   public async store(req:Request,res:Response){
     try{
@@ -30,6 +32,19 @@ import GenreRepository from '../../repositories/genre/genre.repository';
     }
   }
   // store genre
+
+
+
+  // update genre
+  public async update(req:Request,res:Response){
+    try{
+      const response = await Genre.update(req);
+      return res.status(200).json(formatResponse(response,true));
+    }catch(e){
+      res.status(500).json(formatResponse(e,false));
+    }
+  }
+  // end update genre
 
  }
 
