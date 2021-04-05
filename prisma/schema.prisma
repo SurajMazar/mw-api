@@ -15,6 +15,7 @@ model Role{
   id Int @id @default(autoincrement())
   name String @unique
   user User[]
+  deleted   Boolean @default(false)
   createdAt DateTime
   updatedAt DateTime
 }
@@ -29,6 +30,7 @@ model User{
   userImage String?
   role Role @relation(fields: [roleId], references: [id])
   roleId Int
+  deleted   Boolean @default(false)
   createdAt DateTime
   updatedAt DateTime
 }
@@ -38,6 +40,8 @@ model genre{
   id Int @id @default(autoincrement())
   name String
   slug String @unique
+  description String?
+  deleted   Boolean @default(false)
   createdAt DateTime
   updatedAt DateTime
 }

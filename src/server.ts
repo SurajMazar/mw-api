@@ -13,5 +13,5 @@ app.use(cors());
 
 app.use('/api',routes); // api routes
 
-app.listen(5000);// serving the express app
+app.listen(process.env.PORT);// serving the express app
 
