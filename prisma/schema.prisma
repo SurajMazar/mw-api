@@ -29,6 +29,7 @@ model User{
   address String?
   userImage String?
   role Role @relation(fields: [roleId], references: [id])
+  mangas Manga[]
   roleId Int
   deleted   Boolean @default(false)
   createdAt DateTime
@@ -36,12 +37,61 @@ model User{
 }
 
 
-model genre{
+model Genre{
   id Int @id @default(autoincrement())
   name String
   slug String @unique
-  description String?
+  description String? @db.LongText
+  mangas Manga[]
   deleted   Boolean @default(false)
   createdAt DateTime
   updatedAt DateTime
 }
+
+model Chapter{
+  id Int @id @default(autoincrement())
+  chapter_no Int
+  title String
+  slug String @unique
+  pages String? @db.LongText
+  published Boolean
+  publish_date DateTime
+  free Boolean
+  deleted Boolean @default(false)
+  mangaId Int
+  manga Manga @relation(fields: [mangaId], references: [id]) // belongs to one manga
+  // search engine optiomization
+  meta_title String?
+  meta_description String? @db.MediumText
+  meta_keywords String?
+  // search engine optimization
+  createdAt DateTime
+  updatedAt DateTime
+}
+
+
+model Manga{
+  id Int @id @default(autoincrement())
+  thumbnail String?
+  cover_picture String?
+  title String
+  slug String @unique
+  excerpt String @db.MediumText
+  description String @db.LongText
+  status String 
+  published Boolean
+  publish_date DateTime
+  deleted Boolean @default(false)
+  chapter Chapter[] // has many chapters
+  authors User[] 
+  genres Genre[]
+  // search engine optiomization
+  meta_title String?
+  meta_description String?
+  meta_keywords String?
+  // search engine optimization
+  createdAt DateTime
+  updatedAt DateTime
+}
+
+

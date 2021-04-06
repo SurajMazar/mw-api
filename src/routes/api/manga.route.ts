@@ -1,6 +1,6 @@
 import express from 'express';
 import jwtAuthMiddleware from '../../http/middleware/api.middleware';
-import {MangaController} from '../../http/controller/backend/manga.controller'; 
+import MangaController from '../../http/controller/backend/manga.controller'; 
 
 const router = express.Router();
 const Manga = new MangaController();

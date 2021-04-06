@@ -14,4 +14,7 @@ router.get('/',Genre.index);
 router.post('/store',genreRequest(),validate,Genre.store);
 router.put('/update/:id',genreRequest(),validate,Genre.update);
 
+
+
+
 export default router;

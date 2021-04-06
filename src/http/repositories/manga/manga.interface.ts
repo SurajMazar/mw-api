@@ -1,3 +1,5 @@
+import { Request } from "express";
+
 export interface MangaInterface{
-  index():any;
+  index(req:Request):any;
 }
