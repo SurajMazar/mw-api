@@ -24,3 +24,13 @@ export const slugGenerator = async (prismaH:any,slug:string,i:number=1)=>{
 export const cleanSlug = (slugString:string) =>{
   return slug(slugString,'_');
 }
+
+
+export const getfilename = (filename:any)=>{
+  if(filename){
+    const cleanName = slug(filename,'-');
+    var i = filename.lastIndexOf('.');
+    return (i < 0) ? '' : Date.now() + cleanName+'.'+ filename.substr(i);
+  }
+  return;
+}

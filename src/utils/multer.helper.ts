@@ -1,14 +1,31 @@
 import multer from 'multer';
 
-const fileStorage = multer.diskStorage({
+
+const storageSettings = multer.diskStorage({
   destination:(req,file,cb)=>{
-    cb(null,'uploads')
+    cb(null,'./public/uploads')
   },
   filename:(req,file,cb)=>{
-    cb(null,file.filename+'-'+file.originalname)
+    cb(null, Date.now() +'-'+file.originalname)
   }
-})
+});
 
-const multerInstance = multer({storage:fileStorage}).single('image');
+interface fieldName{
+  name:string
+}
 
-export default multerInstance;
+export const getMulterInstance = (destinationDirectory:String,fieldName:Array<fieldName>) =>{
+  const storageSettings = multer.diskStorage({
+    destination:(req,file,cb)=>{
+      cb(null,'./public/uploads' + destinationDirectory)
+    },
+    filename:(req,file,cb)=>{
+      cb(null, Date.now() +'-'+ file.originalname)
+    }
+  });
+  const upload = multer({storage:storageSettings}).fields(fieldName);
+  return upload;
+}
+
+
+export const upload = multer({storage:storageSettings})

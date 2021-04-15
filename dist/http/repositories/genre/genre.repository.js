@@ -47,28 +47,37 @@ var GenreRepository = /** @class */ (function () {
     function GenreRepository() {
     }
     GenreRepository.prototype.index = function (req) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var page, genres, total, e_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var page, keyword, genres, total, e_1;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 3, , 4]);
+                        _b.trys.push([0, 3, , 4]);
                         page = Number(req.query.page);
+                        keyword = ((_a = (req.query.keyword)) === null || _a === void 0 ? void 0 : _a.toString()) || '';
                         return [4 /*yield*/, prisma_helper_1.default.genre.findMany({
                                 orderBy: {
                                     createdAt: 'desc',
                                 },
                                 skip: page * site_config_1.ItemPerPage - site_config_1.ItemPerPage || 0,
-                                take: site_config_1.ItemPerPage
+                                take: site_config_1.ItemPerPage,
+                                where: {
+                                    OR: [
+                                        { name: { contains: keyword } },
+                                        { slug: { contains: keyword } },
+                                        { description: { contains: keyword } }, // search keyword query
+                                    ]
+                                }
                             })];
                     case 1:
-                        genres = _a.sent();
+                        genres = _b.sent();
                         return [4 /*yield*/, prisma_helper_1.default.genre.count()];
                     case 2:
-                        total = _a.sent();
+                        total = _b.sent();
                         return [2 /*return*/, response_helper_1.paginate('genres', page, total, genres)];
                     case 3:
-                        e_1 = _a.sent();
+                        e_1 = _b.sent();
                         throw new Error(e_1);
                     case 4: return [2 /*return*/];
                 }
@@ -130,6 +139,7 @@ var GenreRepository = /** @class */ (function () {
         });
     };
     // get genre by id
+    // update genre
     GenreRepository.prototype.update = function (req) {
         return __awaiter(this, void 0, void 0, function () {
             var id, _a, name_2, slug, description, createdAt, CleanSlug, generatedSlug, preGenre, genre, e_3;

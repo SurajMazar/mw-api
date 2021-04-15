@@ -1,4 +1,3 @@
-import { response } from 'express';
 import { ItemPerPage } from '../constants/site.config';
 
 export const formatResponse = (data:any,success:boolean) =>{
