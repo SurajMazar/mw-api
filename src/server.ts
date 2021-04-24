@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import {PORT} from './constants/config';
 import routes from './routes/api/api';
 import cors from 'cors';
+// import {upload} from './utils/multer.helper';
 import { formatResponse } from './utils/response.helper';
 
 
@@ -9,6 +10,7 @@ const app = express();
 // json parser for body
 app.use(express.static('./public'));
 app.use(express.json());
+// app.use(upload.any());
 app.use(express.urlencoded({ extended: false}));
 app.use(cors());
 

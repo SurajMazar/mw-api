@@ -50,7 +50,7 @@ model Genre{
 
 model Chapter{
   id Int @id @default(autoincrement())
-  chapter_no Int
+  chapter_no String
   title String
   slug String @unique
   pages String? @db.LongText

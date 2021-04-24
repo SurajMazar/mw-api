@@ -24,6 +24,16 @@ class MangaController{
     }
   }
 
+
+  public async update(req:Request,res:Response){
+    try{
+      const manga = await Manga.update(req);
+      res.status(200).json(formatResponse(manga,true));
+    }catch(e){
+      res.status(500).json(formatResponse(e,false));
+    }
+  }
+
 }
 
 
